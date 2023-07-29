@@ -24,16 +24,11 @@ import java.util.UUID;
 @RequestMapping("/hotel")
 public class HotelManagementController {
 
-    private final HotelService hotelService;
-    private final UserService userService;
+    private final HotelService hotelService = new HotelService();
+    private final UserService userService = new UserService();
 
-    private final BookingService bookingService;
+    private final BookingService bookingService = new BookingService();
 
-    public HotelManagementController(HotelService hotelService, UserService userService, BookingService bookingService) {
-        this.hotelService = hotelService;
-        this.userService = userService;
-        this.bookingService = bookingService;
-    }
 
     @PostMapping("/add-hotel")
     public String addHotel(@RequestBody Hotel hotel){

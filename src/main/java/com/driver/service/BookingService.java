@@ -14,9 +14,9 @@ public class BookingService {
     private final HotelRepository hotelRepository;
     private final BookingRepository bookingRepository;
 
-    public BookingService(HotelRepository hotelRepository, BookingRepository bookingRepository) {
-        this.hotelRepository = hotelRepository;
-        this.bookingRepository = bookingRepository;
+    public BookingService() {
+        this.hotelRepository = new HotelRepository();
+        this.bookingRepository = new BookingRepository();
     }
 
     public int bookRooms(Booking booking) {
