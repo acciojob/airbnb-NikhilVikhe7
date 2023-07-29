@@ -14,9 +14,10 @@ public class HotelService {
 
     private final HotelRepository hotelRepository;
 
-    public HotelService() {
-        this.hotelRepository = new HotelRepository();
+    public HotelService(HotelRepository hotelRepository) {
+        this.hotelRepository = hotelRepository;
     }
+
 
 
     public String addHotel(Hotel hotel) {
@@ -33,19 +34,16 @@ public class HotelService {
 
     public Hotel getHotelWithMostFacilities() {
         List<Hotel> hotels = hotelRepository.findAll();
-       return hotels.stream().min(mostFacilitiesComparator).orElse(null);
+       return hotels.stream().max(mostFacilitiesComparator).orElse(null);
     }
 
-    Comparator<Hotel> mostFacilitiesComparator = new Comparator<Hotel>() {
-        @Override
-        public int compare(Hotel o1, Hotel o2) {
-            if(o1.getFacilities().size() == o2.getFacilities().size())
-            {
-                return o2.getHotelName().compareTo(o1.getHotelName());
-            }
-
-            return o1.getFacilities().size() - o2.getFacilities().size();
+    Comparator<Hotel> mostFacilitiesComparator = (o1, o2) -> {
+        if(o1.getFacilities().size() == o2.getFacilities().size())
+        {
+            return o2.getHotelName().compareTo(o1.getHotelName());
         }
+
+        return o1.getFacilities().size() - o2.getFacilities().size();
     };
 
     public Hotel addFacilities(String hotelName, List<Facility> newFacilities) {

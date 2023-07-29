@@ -4,6 +4,9 @@ import com.driver.model.Booking;
 import com.driver.model.Facility;
 import com.driver.model.Hotel;
 import com.driver.model.User;
+import com.driver.repository.BookingRepository;
+import com.driver.repository.HotelRepository;
+import com.driver.repository.UserRepository;
 import com.driver.service.BookingService;
 import com.driver.service.HotelService;
 import com.driver.service.UserService;
@@ -24,10 +27,17 @@ import java.util.UUID;
 @RequestMapping("/hotel")
 public class HotelManagementController {
 
-    private final HotelService hotelService = new HotelService();
-    private final UserService userService = new UserService();
 
-    private final BookingService bookingService = new BookingService();
+    HotelRepository hotelRepository = new HotelRepository();
+
+    BookingRepository bookingRepository = new BookingRepository();
+
+    UserRepository userRepository = new UserRepository();
+
+    private final HotelService hotelService = new HotelService(hotelRepository);
+    private final UserService userService = new UserService(userRepository);
+
+    private final BookingService bookingService = new BookingService(hotelRepository, bookingRepository);
 
 
     @PostMapping("/add-hotel")
@@ -48,7 +58,7 @@ public class HotelManagementController {
         //You need to add a User Object to the database
         //Assume that user will always be a valid user and return the aadharCardNo of the user
         User savedUser = userService.addUser(user);
-       return savedUser.getaadharCardNo();
+        return savedUser.getaadharCardNo();
     }
 
     @GetMapping("/get-hotel-with-most-facilities")
@@ -86,7 +96,7 @@ public class HotelManagementController {
     {
         //In this function return the bookings done by a person
         List<Booking> bookings = bookingService.getBookingsByAadhar(aadharCard);
-        return bookings.size();
+        return bookings == null ? 0 : bookings.size();
     }
 
     @PutMapping("/update-facilities")

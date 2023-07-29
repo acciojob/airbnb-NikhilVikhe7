@@ -14,9 +14,9 @@ public class BookingService {
     private final HotelRepository hotelRepository;
     private final BookingRepository bookingRepository;
 
-    public BookingService() {
-        this.hotelRepository = new HotelRepository();
-        this.bookingRepository = new BookingRepository();
+    public BookingService(HotelRepository hotelRepository, BookingRepository bookingRepository) {
+        this.hotelRepository = hotelRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     public int bookRooms(Booking booking) {
@@ -28,6 +28,9 @@ public class BookingService {
 
         int totalAmount = hotel.getPricePerNight() * booking.getNoOfRooms();
         booking.setAmountToBePaid(totalAmount);
+
+        hotel.setAvailableRooms(hotel.getAvailableRooms()- booking.getNoOfRooms());
+
 
         bookingRepository.save(booking);
 
