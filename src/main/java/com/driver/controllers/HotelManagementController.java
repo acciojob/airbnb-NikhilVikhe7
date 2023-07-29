@@ -74,6 +74,10 @@ public class HotelManagementController {
             return "";
         }
 
+        if(hotel.getFacilities().size() == 0){
+            return "";
+        }
+
         return hotel.getHotelName();
     }
 
