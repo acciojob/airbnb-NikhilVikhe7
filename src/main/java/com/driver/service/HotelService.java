@@ -41,7 +41,7 @@ public class HotelService {
         public int compare(Hotel o1, Hotel o2) {
             if(o1.getFacilities().size() == o2.getFacilities().size())
             {
-                return o1.getHotelName().compareTo(o2.getHotelName());
+                return o2.getHotelName().compareTo(o1.getHotelName());
             }
 
             return o1.getFacilities().size() - o2.getFacilities().size();
