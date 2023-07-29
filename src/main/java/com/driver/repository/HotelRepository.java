@@ -3,10 +3,8 @@ package com.driver.repository;
 import com.driver.model.Hotel;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class HotelRepository {
@@ -31,6 +29,6 @@ public class HotelRepository {
     }
 
     public List<Hotel> findAll(){
-        return hotels.values().stream().toList();
+        return new ArrayList<>(hotels.values());
     }
 }
